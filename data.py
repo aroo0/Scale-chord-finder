@@ -1,22 +1,18 @@
 
-
-# notes = ['C', ['C#', 'Db'], 'D', ['D#', 'Eb'], 'E', 'E#',
-#          'F', ['F#', 'Gb'], 'G', ['G#', 'Ab'], 'A', ['A#', 'Bb'], 'B', 'C', [
-#              'C#', 'Db'], 'D', ['D#', 'Eb'], 'E', 'E#',
-#          'F', ['F#', 'Gb'], 'G', ['G#', 'Ab'], 'A', ['A#', 'Bb'], 'B']
-
+#               ~~<<< SCALES >>>~~
 
 notes = ['Cb', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'E#',
-         'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B', 
-         'Cb', 'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'E#',
+         'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B', 'Cb',
+         'C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'E#',
          'F', 'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B', 'Cb']
 
 
-# Major scale formula U (tonika),  W, W, H, W, W, W, H (tonika)
-
 
 major_formula = [1, 1, 0, 1, 1, 1]
+minor_harmonic_formula = [1, 0, 1, 1, 0, 2]
 
+scales = ['C', 'C#', 'Db', 'D', 'D#', 'Eb', 'E', 'F',
+    'F#', 'Gb', 'G', 'G#', 'Ab', 'A', 'A#', 'Bb', 'B']
 
 def creating_scale(note, formula):
     scale = []
@@ -27,24 +23,28 @@ def creating_scale(note, formula):
     for step in formula:
         if step == 1:
             marker += 3
-            scale.append(notes[scale_note_index + marker])
+        elif step == 2:
+            marker += 4
         else:
             marker += 2
-            scale.append(notes[scale_note_index + marker])
+
+        scale.append(notes[scale_note_index + marker])
 
     return scale
 
+minor_scales = {}
+major_scales = {}
 
-print(creating_scale('D', major_formula))
-print(creating_scale('C', major_formula))
-print(creating_scale('G', major_formula))
-print(creating_scale('E', major_formula))
-print(creating_scale('F#', major_formula))
-print(creating_scale('B', major_formula))
-print(creating_scale('A', major_formula))
-print(creating_scale('Eb', major_formula))
+for scale in scales:
+    minor_scales[scale] = creating_scale(scale, minor_harmonic_formula)
+    major_scales[scale] = creating_scale(scale, major_formula)
 
 
+# print(minor_scales)
+# print(major_scales)
 
 
-scales = {'C': ['Cmaj', 'Dmin', 'Emin', 'Fmaj', ' Gmaj', 'Amin', 'Bdim']}
+###                 ~~<<< CHORDS >>>~~
+
+### MINOR SCALES CHORDS: i, ii dim, III, iv, V, VI, vii dim
+### MAJOR SCALES CHORDS: I, ii, iii, IV, V, vi, vii dim
