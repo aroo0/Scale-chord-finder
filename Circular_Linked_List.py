@@ -1,7 +1,10 @@
+
 class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
+        self.prev = None
+
 
 
 class Circular_Linked_List:
@@ -25,6 +28,7 @@ class Circular_Linked_List:
         if not self.head:
             self.head = new_node
             self.head.next = self.head
+            self.head.prev = self.head
 
         else:
             current = self.head
@@ -32,14 +36,44 @@ class Circular_Linked_List:
                 current = current.next
 
             current.next = new_node
+            new_node.prev = current
             new_node.next = self.head
+            self.head.prev = new_node
 
-    def make_list_from_list(self, note):
+    def check_last(self):
+        return self.head.prev
 
-        formula = [2, 4, 5, 7, 9, 11]
+    def generating_list(self, formula=None): ### To make chords progressions / AS LIST + string added
         temp_formula = list(formula)
-        scale = Circular_Linked_List()
-        scale.append_node(note)
+        ret_list = []
+        current = self.head
+        while current:
+            ret_list.append(current.value + ' ' + temp_formula[0])
+            temp_formula.pop(0)
+            current = current.next
+            if current == self.head:
+                break
+
+        return ret_list
+
+
+    def gen_pure_list(self): # AS PY LIST
+        list_to_return = []
+        current = self.head
+        while current:
+            list_to_return.append(current.value)
+            current = current.next
+            if current == self.head:
+                break
+        return list_to_return
+
+
+
+    def make_list_from_list(self, note, formula, mode='normal'):  # AS Circular_Linked_List
+
+        temp_formula = list(formula)
+        ret_list = Circular_Linked_List()
+        ret_list.append_node(note)
 
         start = None
         current = self.head
@@ -50,54 +84,31 @@ class Circular_Linked_List:
                     start = current.value
             else:
                 if note == current.value:
-                    start = current.value
+                    start = current
+
         counter = 0
         while len(temp_formula) != 0:
             while counter != temp_formula[0]:
-                temp_prev = current
                 current = current.next
                 counter += 1
             if type(current.value) == list:
-                if temp_prev.value not in current.value[0]:
-                    scale.append_node(current.value[1])
+                if mode == 'normal':
+                    first = 1
+                    second = 0
                 else:
-                    scale.append_node(current.value[0])
+                    first = 0
+                    second = 1
+
+                if ret_list.check_last().value[0] == current.value[0][0]:
+                    ret_list.append_node(current.value[first])
+                else:
+                    ret_list.append_node(current.value[second])
+                
             else:
-                scale.append_node(current.value)
+                ret_list.append_node(current.value)
+
             temp_formula.pop(0)
 
-
-        return scale
-
+        return ret_list
 
 
-
-
-
-
-
-
-
-
-
-        return start
-
-
-
-
-
-
-    # def prepend_node(self, value):
-    #     new_node = Node(value)
-
-    #     if not self.head:
-    #         self.head = new_node
-    #         self.head.next = self.head
-
-    #     else:
-    #         current = self.head
-    #         while current.next != self.head:
-    #             current = current.next
-    #         current.next = new_node
-    #         new_node.next = self.head
-    #         self.head = new_node
