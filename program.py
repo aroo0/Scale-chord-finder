@@ -1,4 +1,4 @@
-from data import *
+import data
 import re
 
 
@@ -131,6 +131,7 @@ def conversation():
     descript()
     searching_chord()
     exit()
+
 
 
 conversation()
