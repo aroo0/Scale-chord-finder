@@ -1,9 +1,10 @@
 import data
+import Tree
 import re
 
 
 def split_and_sort(list):
-
+    # A function that divides the results after a BFS search and sorts the chords in order from I to VII
     for element in list:
         degree = int(str(element[3])[-1])
         element.append(degree)
@@ -15,14 +16,15 @@ def split_and_sort(list):
 
 
 def print_result(list):
+    #Printing the results as follows: -->> Scale: Chord (function/number)
     print('This chord is found in the following scales:')
 
     for element in list:
-        print('\n')
         print(f"-->> {element[2]} {element[1]} scale: {element[3]}")
 
 
 def set_chord():
+    # Talking to the player, asking what chord he is looking for, first what sound second what mode.
     checker = None
     chord = ''
     while checker == None:
@@ -52,6 +54,12 @@ def set_chord():
     else:
         set_chord()
 
+
+
+# Check_note/check_type function:
+# A regex implementation so that the program understands the various abbreviations 
+# the player used to specify the chord: C flat/B/b Major/major/major, etc.
+# Further translate to the standard in which these names are specified in the data structure.
 
 def check_note(string):
     good = r'^([A-G]|[a-g]{1})'
@@ -83,8 +91,10 @@ def check_type(string):
 
 
 def searching_chord():
+    # The main function that handles talking to the player, 
+    # specifying what he or she is looking for and searching for a chord.
     chord = set_chord()
-    list_of_scales = split_and_sort(bfs(scale_root, chord))
+    list_of_scales = split_and_sort(Tree.bfs(data.scale_root, chord))
     print_result(list_of_scales)
     display_notes(chord)
 
@@ -100,6 +110,7 @@ def searching_chord():
 
 
 def display_notes(chord):
+    # Additional functionality if the player would like to know what tones go into a chord.
     question = None
     while question not in ['y', 'n']:
         question = input(
@@ -107,13 +118,13 @@ def display_notes(chord):
 
         if question == 'y':
             if 'Major' in chord:
-                print(major_chords[chord])
+                print(data.major_chords[chord])
             elif 'minor' in chord:
-                print(minor_chords[chord])
+                print(data.minor_chords[chord])
             elif 'augmented' in chord:
-                print(aug_chords[chord])
+                print(data.aug_chords[chord])
             else:
-                print(dim_chords[chord])
+                print(data.dim_chords[chord])
 
         if question == 'n':
             return

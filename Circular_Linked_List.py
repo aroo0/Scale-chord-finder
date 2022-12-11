@@ -8,6 +8,7 @@ class Node:
 
 
 class Circular_Linked_List:
+    # Implementation of a classic data structure Circular_Linked_List
     def __init__(self):
         self.head = None
 
@@ -43,7 +44,8 @@ class Circular_Linked_List:
     def check_last(self):
         return self.head.prev
 
-    def generating_list(self, formula=None): ### To make chords progressions / AS LIST + string added
+    def generating_list(self, formula=None):
+    # Generate a list from a looped list of tones according to chord formula.
         temp_formula = list(formula)
         ret_list = []
         current = self.head
@@ -57,7 +59,8 @@ class Circular_Linked_List:
         return ret_list
 
 
-    def gen_pure_list(self): # AS PY LIST
+    def gen_pure_list(self):
+        # Flattening Circular_Linked_List to a regular python list
         list_to_return = []
         current = self.head
         while current:
@@ -69,8 +72,8 @@ class Circular_Linked_List:
 
 
 
-    def make_list_from_list(self, note, formula, mode='normal'):  # AS Circular_Linked_List
-
+    def make_list_from_list(self, note, formula, mode='normal'): 
+        # Generate a list from a looped list of tones according to scale formula.
         temp_formula = list(formula)
         ret_list = Circular_Linked_List()
         ret_list.append_node(note)
